@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhexun.mapper.UserMapper">
+    <resultMap id="userResultMap" type="user">
+
+    </resultMap>
+
+    <update id="update">
+        <if test="uid != null">
+            update user
+            <set>
+                <if test="uname != null and uname != ''">uname=#{uname},</if>
+                <if test="upassword != null and upassword != ''">upassword=#{upassword},</if>
+                <if test="uintroduce != null and uintroduce != ''">uintroduce=#{uintroduce},</if>
+                <if test="email != null and email != ''">email=#{email},</if>
+                <if test="birthday != null and birthday != ''">birthday=#{birthday}</if>
+            </set>
+            where uid = #{uid}
+        </if>
+    </update>
+    <delete id="deleteByIds">
+        delete from user where uid in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>

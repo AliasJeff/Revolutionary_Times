@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全部内容</title>
+    <link rel="stylesheet" href="./css/nav.css">
+    <link rel="stylesheet" href="./css/all.css">
+    <link rel="stylesheet" href="./css/allArticle.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./layui/layui/css/layui.css">
+    <style>
+        body {
+            background-color: #f3e8d6;
+        }
+
+        .art-model {
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .img-txt img {
+            width: 150px;
+            height: 88px;
+            border-radius: 3px;
+            transition: transform .3s linear;
+        }
+
+        section {
+            margin: 35px auto;
+            padding: 15px;
+            width: 80%;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+
+        .box1 {
+            width: 45%;
+            float: left;
+            padding: 10px;
+        }
+
+        .img-txt dd .detail {
+            font-size: 14px;
+            line-height: 25px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical
+        }
+
+        .img-txt dd .btn {
+            float: right;
+            margin-top: 0;
+            padding: 0;
+            color: #ce7d88;
+            /*background: rgba(255, 255, 255, 0.6);*/
+            font-size: 12px;
+            text-align: center;
+            border-radius: 5px;
+        }
+
+        .box2 {
+            padding: 15px;
+            width: 45%;
+            float: right;
+        }
+
+        .box3 {
+            padding: 15px;
+            width: 45%;
+            float: right;
+        }
+
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="shell">
+        <div class="shell-main">
+            <div class="shell-main-nav">
+                <div class="logo">
+                    <img src="./image/flag.png" alt="">
+                    <span>红音相传</span>
+                </div>
+                <div class="search">
+                    <span class="icon">🔍</span>
+                    <input id="search-input" name="search-input" placeholder="搜索文章的标题或内容">
+                    <a class="searchButton" href="javascript:;" onclick="toSearch()">搜索</a>
+                </div>
+                <ul class="layui-nav">
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="userInfo.html">个人中心</a></li>
+                    <li><a href="more.html">查看更多</a></li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">发布/上传</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="postArticle.html">发布文章</a></dd>
+                            <dd><a href="postCourse.html">上传课程</a></dd>
+                            <dd><a href="postPicture.html">上传图片</a></dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <a href="login.html" v-if="uname == '' || uname == null">登陆/注册</a>
+                        <a href="userInfo.html" v-else>欢迎，{{uname}}</a>
+                    </li>
+                    <div class="nav-box"></div>
+                </ul>
+            </div>
+            <section>
+                <div class="box1">
+                    <div class="art-model" v-for="article in articles">
+                        <h3><a :href="'article.html?articleid='+article.articleid">{{article.title}}</a></h3>
+                        <p class="dateview"><span>发布时间: {{article.date}}</span>
+<!--                            <span>作者: {{article.uname}}&nbsp;&nbsp;阅读: {{article.view}}&nbsp;获赞: {{article.like}}&nbsp;收藏: {{article.collect}}</span>-->
+                        </p>
+                        <dl class="img-txt">
+                            <dd>
+                                <p class="detail">{{article.content}}</p>
+                                <a :href="'article.html?articleid='+article.articleid" class="btn  c-fff">查看全文</a>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="box2">
+                    <div class="art Label clearfix">
+                        <h2 class="art-txt">
+                            <span>图片</span>
+                        </h2>
+                        <ul class="list">
+                            <li>
+                                <a href="./image/pic1.jpg"><img src="./image/pic1.jpg" alt=""></a>
+<!--                                <div class="description">-->
+<!--                                    <h3><a href="javascript:;">图片1</a></h3>-->
+<!--                                </div>-->
+                            </li>
+                            <li>
+                                <a href="./image/1.jpg"><img src="./image/1.jpg" alt=""></a>
+<!--                                <div class="description">-->
+<!--                                    <h3><a href="javascript:;">图片1</a></h3>-->
+<!--                                </div>-->
+                            </li>
+                            <li>
+                                <a href="./image/2.jpg"><img src="./image/2.jpg" alt=""></a>
+<!--                                <div class="description">-->
+<!--                                    <h3><a href="javascript:;">图片1</a></h3>-->
+<!--                                </div>-->
+                            </li>
+                            <li>
+                                <a href="./image/3.jpg"><img src="./image/3.jpg" alt=""></a>
+<!--                                <div class="description">-->
+<!--                                    <h3><a href="javascript:;">图片1</a></h3>-->
+<!--                                </div>-->
+                            </li>
+                            <li>
+                                <a href="./image/4.jpg"><img src="./image/4.jpg" alt=""></a>
+<!--                                <div class="description">-->
+<!--                                    <h3><a href="javascript:;">图片1</a></h3>-->
+<!--                                </div>-->
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box3">
+                    <div class="art">
+                        <h2 class="art-txt">
+                            <span>视频</span>
+                        </h2>
+                        <ul class="art-list" id="art-list">
+                            <div v-model="videos.title"></div>
+                            <li>
+                                <a href="video.html?id=1"><span>走访雷烨故居，项善宝爷爷亲切为我们讲解</span></a>
+                            </li>
+                            <li>
+                                <a href="video.html?id=2"><span>烈士家属沈奶奶讲述父亲的故事</span></a>
+                            </li>
+                            <li>
+                                <a href="video.html?id=3"><span>公交车偶遇九十多岁民兵，侃侃而谈</span></a>
+                            </li>
+                            <li>
+                                <a href="video.html?id=4"><span>拜访俞讯，了解俞邵安英雄事迹</span></a>
+                            </li>
+                            <li>
+                                <a href="video.html?id=5"><span>开展红色剧本趣味课堂</span></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </section>
+
+        </div>
+        <div class="shell-main-footer">
+            <span>风华薪火，红心传扬</span>
+        </div>
+
+    </div>
+</div>
+</body>
+<script src="./js/axios.js"></script>
+<script src="./js/vue.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data() {
+            return {
+                uname: "",
+                articles: [],
+                pictures: [],
+                videos: []
+            }
+        },
+        mounted() {
+            let _this = this
+            _this.uname = sessionStorage.getItem("username")
+
+            _this.getArticles()
+        },
+        methods: {
+            getArticles() {
+                let _this = this
+                axios.get("/RevolutionaryTimes/articles").then(res => {
+                    _this.articles = res.data;
+                })
+            },
+        }
+    })
+</script>
+
+<script src="./layui/layui/layui.js"></script>
+<script>
+    layui.use('element', function () {
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+        //导航点击事件
+        element.on('nav(demo)', function (elem) {
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+    });
+</script>
+</html>

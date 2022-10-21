@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhexun.mapper.ArticleMapper">
+    <resultMap id="articleResultMap" type="article">
+        <result column="uname" property="uname"></result>
+    </resultMap>
+    
+    <delete id="deleteByIds">
+        delete from article where articleid in
+        <foreach collection="articleids" item="articleid" separator="," open="(" close=")">
+            #{articleid}
+        </foreach>
+    </delete>
+
+    <select id="selectByCondition" resultType="com.zhexun.pojo.Article">
+        select * from article
+        <where>
+            <if test="articleid != null">articleid=#{articleid}</if>
+            <if test="uid != null">uid=#{uid}</if>
+            <if test="uname != null and uname != ''">uname=#{uname}</if>
+            <if test="title != null and title != ''">title=#{title}</if>
+        </where>
+    </select>
+
+    <select id="searchAllByCondition" resultType="com.zhexun.pojo.Article">
+        select * from article
+        <if test="title != null and title != ''">title like #{title}</if>
+        <if test="content != null and content != ''">content like #{content}</if>
+    </select>
+
+</mapper>

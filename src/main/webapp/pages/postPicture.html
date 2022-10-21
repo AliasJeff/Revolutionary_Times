@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传图片</title>
+    <link rel="stylesheet" href="./css/nav.css">
+    <link rel="stylesheet" href="./css/all.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./layui/layui/css/layui.css">
+    <style>
+        #image-preview {
+            border: 1px solid #ccc;
+            width: 100%;
+            height: 100%;
+            max-width: 200px;
+            max-height: 200px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <div class="shell">
+        <div class="shell-main">
+            <div class="shell-main-nav">
+                <div class="logo">
+                    <img src="./image/flag.png" alt="">
+                    <span>红音相传</span>
+                </div>
+                <div class="search">
+                    <span class="icon">🔍</span>
+                    <input id="search-input" name="search-input" placeholder="搜索文章的标题或内容">
+                    <a class="searchButton" href="javascript:;" onclick="toSearch()">搜索</a>
+                </div>
+                <ul class="layui-nav">
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="userInfo.html">个人中心</a></li>
+                    <li><a href="more.html">查看更多</a></li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">发布/上传</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="postArticle.html">发布文章</a></dd>
+                            <dd><a href="postCourse.html">上传课程</a></dd>
+                            <dd><a href="postPicture.html">上传图片</a></dd>
+                        </dl>
+                    </li>
+                    <li>
+                        <a href="login.html" v-if="uname == '' || uname == null">登陆/注册</a>
+                        <a href="userInfo.html" v-else>欢迎，{{uname}}</a>
+                    </li>
+                    <div class="nav-box"></div>
+                </ul>
+            </div>
+            <p>图片预览：</p>
+            <img id="image-preview">
+            <p>
+                <input type="file" name="file" id="file"/>
+                <input type="submit"/>
+            </p>
+            <p id="info"></p>
+            <input type="hidden" id="date1" name="date1">
+        </div>
+    </div>
+</div>
+</body>
+<script src="./js/axios.js"></script>
+<script src="./js/vue.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data() {
+            return {
+                uname: "",
+            }
+        },
+        mounted() {
+            let _this = this
+            _this.uname = sessionStorage.getItem("username")
+
+        },
+        methods: {
+
+        }
+    })
+</script>
+<script>
+    var today = new Date();
+    var day = today.getDay();
+    var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var dateTime = date + ' ' + time;
+
+    let fileInput = document.getElementById('file');
+    let info = document.getElementById('info');
+    let preview = document.getElementById('image-preview');
+    // 监听change事件:
+    fileInput.addEventListener('change', function () {
+        // 清除背景图片:
+        preview.style.backgroundImage = '';
+        if (!fileInput.value) {
+            info.innerHTML = '没有选择文件';
+            return;
+        }
+        // 读取文件:
+        let reader = new FileReader();
+        reader.onload = function (e) {
+            let data = e.target.result;
+            console.log(preview, 'a标签')
+            preview.src = data
+        };
+        // 以DataURL的形式读取文件:
+        reader.readAsDataURL(file);
+    });
+</script>
+<script src="./layui/layui/layui.js"></script>
+<script>
+    layui.use('element', function(){
+        var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+        //导航点击事件
+        element.on('nav(demo)', function(elem){
+            //console.log(elem)
+            layer.msg(elem.text());
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhexun.mapper.CommentMapper">
+    <resultMap id="commentResultMap" type="comment">
+        <result column="uname" property="uname"></result>
+    </resultMap>
+
+    <select id="selectAllByCondition" resultType="com.zhexun.pojo.Comment">
+        select * from comment
+        <where>
+            <if test="commentid != null">commentid=#{commentid}</if>
+            <if test="articleid != null">articleid=#{articleid}</if>
+            <if test="uid != null">uid=#{uid}</if>
+            <if test="uoid != null">uoid=#{uoid}</if>
+            <if test="title != null and title != ''">title=#{title}</if>
+            <if test="uname != null and uname != ''">uname=#{uname}</if>
+            <if test="commentContent != null and commentContent != ''">commentContent=#{commentContent}</if>
+            <if test="date != null and date != ''">date=#{date}</if>
+        </where>
+    </select>
+
+    <insert id="add">
+        insert into comment (articleid, title, uid, uname, uoid, uoname, commentContent, date)
+        values
+            (#{articleid}, #{title}, #{uid}, #{uname}, #{uoid}, #{uoname}, #{commentContent}, #{date})
+    </insert>
+
+    <delete id="deleteByIds">
+        delete from comment where commentid in
+        <foreach collection="articleids" item="articleid" separator="," open="(" close=")">
+            #{articleid}
+        </foreach>
+    </delete>
+</mapper>
